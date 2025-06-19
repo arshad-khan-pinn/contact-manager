@@ -1,0 +1,140 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "123-456-7890",
+      "address": "123 Main St",
+      "favourite": true
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "phone": "987-654-3210",
+      "address": "456 Elm St",
+      "favourite": false
+    },
+    {
+      "id": 3,
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "phone": "555-123-4567",
+      "address": "789 Pine St",
+      "favourite": false
+    },
+    {
+      "id": 4,
+      "name": "Bob Martinez",
+      "email": "bob.martinez@example.com",
+      "phone": "444-987-6543",
+      "address": "321 Oak St",
+      "favourite": true
+    },
+    {
+      "id": 5,
+      "name": "Catherine Lee",
+      "email": "catherine.lee@example.com",
+      "phone": "333-456-7891",
+      "address": "654 Maple Ave",
+      "favourite": false
+    },
+    {
+      "id": 6,
+      "name": "David Kim",
+      "email": "david.kim@example.com",
+      "phone": "222-123-9876",
+      "address": "987 Birch Blvd",
+      "favourite": true
+    },
+    {
+      "id": 7,
+      "name": "Emma Wilson",
+      "email": "emma.wilson@example.com",
+      "phone": "111-456-1234",
+      "address": "159 Cedar Rd",
+      "favourite": false
+    },
+    {
+      "id": 8,
+      "name": "Frank Patel",
+      "email": "frank.patel@example.com",
+      "phone": "999-321-6540",
+      "address": "753 Willow Ln",
+      "favourite": false
+    },
+    {
+      "id": 9,
+      "name": "Grace Liu",
+      "email": "grace.liu@example.com",
+      "phone": "888-654-3210",
+      "address": "357 Elmwood Dr",
+      "favourite": true
+    },
+    {
+      "id": 10,
+      "name": "Hector Gomez",
+      "email": "hector.gomez@example.com",
+      "phone": "777-987-1234",
+      "address": "246 Spruce Ct",
+      "favourite": false
+    },
+    {
+      "id": 11,
+      "name": "Isabel Moreno",
+      "email": "isabel.moreno@example.com",
+      "phone": "666-123-4560",
+      "address": "468 Poplar St",
+      "favourite": true
+    },
+    {
+      "id": 12,
+      "name": "Jason Brown",
+      "email": "jason.brown@example.com",
+      "phone": "555-789-0123",
+      "address": "579 Cypress Ave",
+      "favourite": false
+    },
+    {
+      "id": 13,
+      "name": "Karen Davis",
+      "email": "karen.davis@example.com",
+      "phone": "444-210-9876",
+      "address": "680 Redwood Rd",
+      "favourite": false
+    },
+    {
+      "id": 14,
+      "name": "Leonardo Rossi",
+      "email": "leonardo.rossi@example.com",
+      "phone": "333-890-1234",
+      "address": "791 Aspen St",
+      "favourite": true
+    },
+    {
+      "id": 15,
+      "name": "Maria Fernandez",
+      "email": "maria.fernandez@example.com",
+      "phone": "222-345-6789",
+      "address": "892 Pinecone Blvd",
+      "favourite": false
+    },
+    {
+      "id": 16,
+      "name": "Nathan Chen",
+      "email": "nathan.chen@example.com",
+      "phone": "111-567-8901",
+      "address": "913 Elm Terrace",
+      "favourite": false
+    },
+    {
+      "id": 17,
+      "name": "Olivia Thompson",
+      "email": "olivia.thompson@example.com",
+      "phone": "000-678-1234",
+      "address": "102 Maple Ct",
+      "favourite": true
+    }
+  ]
+}
