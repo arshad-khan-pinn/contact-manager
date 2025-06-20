@@ -1,5 +1,5 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
-import ContactListView from "../../sections/contacts/ContactListView";
+import ContactListView from "../../sections/contacts/view/contacts-list-view";
 
 export default function ContactListPage() {
     return (

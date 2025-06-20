@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import ContactList from "../../components/contacts/ContactList";
+import ContactList from "../contact-list";
 
 // const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 //   color: theme.palette.getContrastText("#819A91"),

@@ -1,4 +1,5 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
+import ContactAddNew from "../../sections/contacts/view/contacts-add-new";
 
 export default function ContactAddPage() {
     return (
@@ -6,7 +7,8 @@ export default function ContactAddPage() {
         <Helmet>
           <title>Contact Add</title>
         </Helmet>
-        <h1>Contact Add</h1>
+
+        <ContactAddNew />
         </>
     )
 }
