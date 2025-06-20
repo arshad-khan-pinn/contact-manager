@@ -1,4 +1,6 @@
-import { Box, TextField, Button, Switch, FormControlLabel, Typography, Paper } from '@mui/material';
+import { Box, TextField, Button, Typography, Paper, IconButton } from '@mui/material';
+import Star from '@mui/icons-material/Star';
+import StarBorder from '@mui/icons-material/StarBorder';
 import { Contact, useAddContact, useUpdateContact } from '../../store/contactStore';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
@@ -6,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Resolver } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -30,7 +33,7 @@ interface ContactNewEditFormProps {
 const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
   const navigate = useNavigate();
   const isEdit = !!contact;
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({
     resolver: yupResolver(validationSchema) as Resolver<FormData>,
     defaultValues: {
       name: contact?.name || '',
@@ -40,6 +43,7 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
       favorite: contact?.favourite || false,
     },
   });
+  const [isFavorite, setIsFavorite] = useState<boolean>(contact?.favourite || false);
   const { mutate: addContact, status: addStatus } = useAddContact();
   const { mutate: updateContact, status: updateStatus } = useUpdateContact();
   const isLoading = addStatus === 'pending' || updateStatus === 'pending';
@@ -133,25 +137,22 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
             error={!!errors.address}
             helperText={errors.address?.message}
           />
-          <Box sx={{ mb: 2 }}>
-            <input
-              accept="image/*"
-              style={{ display: 'none' }}
-              id="image-upload"
-              type="file"
-              // onChange={handleImageChange} // Removed handleImageChange
-            />
-            <label htmlFor="image-upload">
-              <Button variant="contained" component="span" sx={{ mb: 1 }}>
-                Upload Image
-              </Button>
-            </label>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <Typography component="legend">Mark as Favorite:</Typography>
+            <IconButton
+              onClick={() => {
+                setIsFavorite(!isFavorite);
+                setValue('favorite', !isFavorite);
+              }}
+            >
+              {isFavorite ? (
+                <Star sx={{ color: '#FFC107' }} />
+              ) : (
+                <StarBorder />
+              )}
+            </IconButton>
+            <input type="hidden" {...register('favorite')} value={String(isFavorite)} />
           </Box>
-          <FormControlLabel
-            control={<Switch {...register('favorite', { value: false })} />}
-            label="Mark as Favorite"
-            sx={{ mb: 2 }}
-          />
           <Button
             type="submit"
             variant="contained"
