@@ -1,5 +1,5 @@
 import { Box, TextField, Button, Switch, FormControlLabel, Typography, Paper } from '@mui/material';
-import { Contact, useAddContact } from '../../store/contactStore';
+import { Contact, useAddContact, useUpdateContact } from '../../store/contactStore';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,13 +23,26 @@ interface FormData {
   favorite?: boolean | null;
 }
 
-const ContactNewEditForm = () => {
+interface ContactNewEditFormProps {
+  contact?: Contact | null;
+}
+
+const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
   const navigate = useNavigate();
+  const isEdit = !!contact;
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(validationSchema) as Resolver<FormData>,
+    defaultValues: {
+      name: contact?.name || '',
+      number: contact?.phone || '',
+      email: contact?.email || '',
+      address: contact?.address || '',
+      favorite: contact?.favourite || false,
+    },
   });
-  const { mutate, status } = useAddContact();
-  const isLoading = status === 'pending';
+  const { mutate: addContact, status: addStatus } = useAddContact();
+  const { mutate: updateContact, status: updateStatus } = useUpdateContact();
+  const isLoading = addStatus === 'pending' || updateStatus === 'pending';
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -41,20 +54,31 @@ const ContactNewEditForm = () => {
         favourite: data.favorite || false,
       };
 
-      console.log("Contact data: ", contactData);
-
-      mutate(contactData, {
-        onSuccess: () => {
-          console.log("Contact added successfully!");
-          toast.success('Contact added successfully!');
-          navigate('/');
-        },
-        onError: (error) => {
-          console.error("Error adding contact:", error);
-          toast.error(`Failed to add contact: ${error.message}`);
-        },
-      });
-
+      if (isEdit) {
+        updateContact({ id: contact.id, ...contactData }, {
+          onSuccess: () => {
+            console.log("Contact updated successfully!");
+            toast.success('Contact updated successfully!');
+            navigate('/');
+          },
+          onError: (error) => {
+            console.error("Error updating contact:", error);
+            toast.error(`Failed to update contact: ${error.message}`);
+          },
+        });
+      } else {
+        addContact(contactData, {
+          onSuccess: () => {
+            console.log("Contact added successfully!");
+            toast.success('Contact added successfully!');
+            navigate('/');
+          },
+          onError: (error) => {
+            console.error("Error adding contact:", error);
+            toast.error(`Failed to add contact: ${error.message}`);
+          },
+        });
+      }
     } catch (error: unknown) {
       console.error("Error adding contact:", error);
     }
@@ -64,7 +88,7 @@ const ContactNewEditForm = () => {
     <Box sx={{ padding: 3, maxWidth: 500, margin: 'auto', mt: 4 }}>
       <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
         <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: 'bold', color: '#1976d2' }}>
-          Add New Contact
+          {isEdit ? 'Edit Contact' : 'Add New Contact'}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
@@ -136,7 +160,7 @@ const ContactNewEditForm = () => {
             sx={{ py: 1.5, fontSize: '1rem' }}
             disabled={isLoading}
           >
-            Add Contact
+            {isEdit ? 'Update Contact' : 'Add Contact'}
           </Button>
         </form>
       </Paper>

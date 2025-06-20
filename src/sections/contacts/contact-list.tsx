@@ -2,11 +2,13 @@ import { Box, Pagination } from '@mui/material';
 import ContactCard from '../../components/contacts/ContactCard';
 import { useContacts, Contact } from '../../store/contactStore';
 
-const ContactList = () => {
-  const page = 1; // set default page to 1
-  const limit = 5; // contacts per page
-  const search = 'test'; // default search term
+interface ContactListProps {
+  page: number;
+  limit: number;
+  search: string;
+}
 
+const ContactList: React.FC<ContactListProps> = ({ page, limit, search }) => {
   const { data, isLoading, isError, error } = useContacts(page, limit, search);
 
   if (isLoading) {
@@ -37,7 +39,6 @@ const ContactList = () => {
       <Pagination
         count={Math.ceil(totalContacts / limit)}
         page={page}
-        // onChange={handlePageChange}
         sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
       />
     </Box>

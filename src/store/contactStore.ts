@@ -1,4 +1,5 @@
 import { useQuery, useMutation, QueryClient } from '@tanstack/react-query';
+import { create } from 'zustand';
 
 const BASE_URL = 'http://localhost:3001';
 
@@ -39,7 +40,9 @@ const addContact = async (contact: Omit<Contact, 'id'>) => {
 
 // Function to update a contact
 const updateContact = async (contact: Contact) => {
-  const response = await fetch(`${BASE_URL}/contacts/${contact.id}`, {
+  const url = `${BASE_URL}/contacts/${contact.id}`;
+  console.log("Update URL: ", url);
+  const response = await fetch(url, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -48,22 +51,35 @@ const updateContact = async (contact: Contact) => {
   });
   console.log("Response: ", response);
   console.log("Response status: ", response.status);
-  console.log("Response data: ", response.json());
   if (!response.ok) {
     throw new Error(`Failed to update contact: ${response.status}`);
   }
-  return response.json();
+  if (response.status === 204) {
+    return null;
+  }
+  const data = await response.json();
+  console.log("Response data: ", data);
+  return data;
 };
 
 // Function to delete a contact
 const deleteContact = async (id: number) => {
-  const response = await fetch(`${BASE_URL}/contacts/${id}`, {
+  const url = `${BASE_URL}/contacts/${id}`;
+  console.log("Delete URL: ", url);
+  const response = await fetch(url, {
     method: 'DELETE',
   });
+  console.log("Response: ", response);
+  console.log("Response status: ", response.status);
   if (!response.ok) {
     throw new Error(`Failed to delete contact: ${response.status}`);
   }
-  return id;
+  if (response.status === 204) {
+    return null;
+  }
+  const data = await response.json();
+  console.log("Response data: ", data);
+  return data;
 };
 
 // Define the Contact interface
@@ -75,6 +91,18 @@ export type Contact = {
   address: string;
   favourite: boolean;
 }
+
+interface ContactStore {
+  selectedContact: Contact | null;
+  setSelectedContact: (contact: Contact) => void;
+  clearSelectedContact: () => void;
+}
+
+export const useContactStore = create<ContactStore>((set) => ({
+  selectedContact: null,
+  setSelectedContact: (contact: Contact) => set({ selectedContact: contact }),
+  clearSelectedContact: () => set({ selectedContact: null }),
+}));
 
 // Hook to use the fetched contacts
 export const useContacts = (page: number, limit: number, search: string) => {
@@ -113,6 +141,7 @@ export const useDeleteContact = () => {
     onSuccess: () => {
       // Invalidate the contacts query to refetch data
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      queryClient.removeQueries({ queryKey: ['contacts'] });
     },
   });
 };
