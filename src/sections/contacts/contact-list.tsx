@@ -1,13 +1,18 @@
 import { Box, Pagination, TextField } from '@mui/material';
 import ContactCard from '../../components/contacts/ContactCard';
-import { useContacts, Contact } from '../../store/contactStore';
+import { useContacts, Contact, useContactStore } from '../../store/contactStore';
 import React, { useState } from 'react';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 const ContactList: React.FC = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const limit = 5;
 
-  const { data, isLoading, isError, error } = useContacts(currentPage, 5, search);
+  const showFavoritesOnly = useContactStore((state) => state.showFavoritesOnly);
+  const setShowFavoritesOnly = useContactStore((state) => state.setShowFavoritesOnly);
+
+  const { data, isLoading, isError, error } = useContacts({ page: currentPage, limit });
 
   if (isLoading) {
     return <div>Loading contacts...</div>;
@@ -24,7 +29,6 @@ const ContactList: React.FC = () => {
     setCurrentPage(value);
   };
 
-
   return (
     <Box sx={{ padding: 2 }}>
       <TextField
@@ -34,9 +38,22 @@ const ContactList: React.FC = () => {
         onChange={(e) => setSearch(e.target.value)}
         sx={{ marginBottom: 2 }}
       />
-      {contacts.map((contact: Contact) => (
-        <ContactCard key={contact.id} contact={contact} />
-      ))}
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={showFavoritesOnly}
+            onChange={(e) => setShowFavoritesOnly(e.target.checked)}
+            color="primary"
+          />
+        }
+        label="Show Favorites Only"
+        sx={{ marginBottom: 2 }}
+      />
+      {contacts
+        .filter((contact: Contact) => !showFavoritesOnly || contact.favourite)
+        .map((contact: Contact) => (
+          <ContactCard key={contact.id} contact={contact} />
+        ))}
       <Pagination
         count={totalPages}
         page={currentPage}

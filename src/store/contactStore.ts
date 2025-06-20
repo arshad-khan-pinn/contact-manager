@@ -1,4 +1,4 @@
-import { useQuery, useMutation, QueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, QueryClient, useQueryClient } from "@tanstack/react-query";
 import { create } from "zustand";
 
 const BASE_URL = "http://localhost:3001";
@@ -9,7 +9,6 @@ const queryClient = new QueryClient();
 // Function to fetch contacts with pagination and search
 const fetchContacts = async (page: number, limit: number) => {
   const url = `${BASE_URL}/contacts?_page=${page}&_per_page=${limit}`;
-  console.log("URL: ", url);
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch contacts: ${response.status}`);
@@ -88,6 +87,24 @@ const deleteContact = async (id: number) => {
   return data;
 };
 
+const fetchfavoriteContact = async (page: number, limit: number) => {
+  const url = `${BASE_URL}/contacts?favourite=true&_page=${page}&_per_page=${limit}`;
+  console.log("Favorite URL: ", url);
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch favorite contacts: ${response.status}`);
+  }
+  const responseData = await response.json();
+  const data = responseData.data;
+  const totalCount = responseData.items;
+  const totalPages = Math.ceil(totalCount / limit);
+
+  console.log("Favorite Data: ", data);
+  console.log("Favorite Total pages: ", totalPages);
+
+  return { data, totalPages };
+};
+
 // Define the Contact interface
 export type Contact = {
   id: number;
@@ -102,19 +119,31 @@ interface ContactStore {
   selectedContact: Contact | null;
   setSelectedContact: (contact: Contact) => void;
   clearSelectedContact: () => void;
+  showFavoritesOnly: boolean;
+  setShowFavoritesOnly: (showFavoritesOnly: boolean) => void;
 }
 
 export const useContactStore = create<ContactStore>((set) => ({
   selectedContact: null,
   setSelectedContact: (contact: Contact) => set({ selectedContact: contact }),
   clearSelectedContact: () => set({ selectedContact: null }),
+  showFavoritesOnly: false,
+  setShowFavoritesOnly: (showFavoritesOnly: boolean) => set({ showFavoritesOnly }),
 }));
 
 // Hook to use the fetched contacts
-export const useContacts = (page: number, limit: number, search: string) => {
+export const useContacts = ({ page, limit }: { page: number; limit: number }) => {
+  const showFavoritesOnly = useContactStore((state) => state.showFavoritesOnly);
   return useQuery({
-    queryKey: ["contacts", page, limit, search],
-    queryFn: () => fetchContacts(page, limit, search),
+    queryKey: ["contacts", page, limit, showFavoritesOnly],
+    queryFn: () => {
+      if (showFavoritesOnly) {
+        return fetchfavoriteContact(page, limit);
+      } else {
+        return fetchContacts(page, limit);
+      }
+    },
+    staleTime: 0,
   });
 };
 
@@ -131,11 +160,26 @@ export const useAddContact = () => {
 
 // Hook to update a contact
 export const useUpdateContact = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: updateContact,
-    onSuccess: () => {
-      // Invalidate the contacts query to refetch data
-      queryClient.invalidateQueries({ queryKey: ["contacts"] });
+    onSuccess: (updatedContact) => {
+      // Update all queries that start with 'contacts'
+      const queries = queryClient.getQueryCache().findAll({ queryKey: ['contacts'] });
+
+      queries.forEach(({ queryKey }) => {
+        queryClient.setQueryData(queryKey, (oldData: any) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData,
+            data: oldData.data.map((c: Contact) =>
+              c.id === updatedContact.id ? updatedContact : c
+            ),
+          };
+        });
+      });
     },
   });
 };
