@@ -1,14 +1,6 @@
 {
   "contacts": [
     {
-      "id": "11",
-      "name": "Isabel Moreno",
-      "email": "isabel.moreno@example.com",
-      "phone": "666-123-4560",
-      "address": "468 Poplar St",
-      "favourite": true
-    },
-    {
       "id": "12",
       "name": "Jason Brown",
       "email": "jason.brown@example.com",
@@ -71,6 +63,14 @@
       "email": "gouri.duragkar@pinnacle.in",
       "address": "fasasdf",
       "favourite": true
+    },
+    {
+      "id": "9312",
+      "name": "fasfsdaf",
+      "phone": "4234234",
+      "email": "fasdfsd@fdsa.com",
+      "address": "fsafds",
+      "favourite": false
     }
   ]
 }

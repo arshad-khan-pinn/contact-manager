@@ -1,15 +1,13 @@
 import { Button } from "@mui/material";
 import ContactList from "../contact-list";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function ContactListView() {
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('test');
 
   return (
     <>
       <h1>Contact List</h1>
-      <ContactList page={page} limit={5} search={search} />
+      <ContactList />
       <Button
         href="/contacts/add"
         sx={{
