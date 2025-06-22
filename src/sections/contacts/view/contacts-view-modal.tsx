@@ -9,6 +9,9 @@ import { useTheme } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { green, red } from "@mui/material/colors";
 
 interface ContactViewModalProps {
   contact: {
@@ -69,8 +72,8 @@ export default function ContactViewModal({
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: 500,
-        height: 500,
+        width: 450,
+        height: 350,
         bgcolor: theme.palette.bg.item,
         borderRadius: 6,
         boxShadow: 24,
@@ -105,13 +108,15 @@ export default function ContactViewModal({
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-        <Button variant="outlined" onClick={handleEdit}>
+        <Button variant="outlined"  sx={{ color: green[500], borderColor: green[500], "&:hover": { backgroundColor: green[700], color: "white" } }}   onClick={handleEdit}>
+          <EditIcon sx={{ mr: 1 }}/>
           Edit
         </Button>
-        <Button variant="outlined" onClick={handleDelete}>
+        <Button variant="outlined" sx={{ color: red[500], borderColor: red[500], "&:hover": { backgroundColor: red[700], color: "white" } }} onClick={handleDelete}>
+          <DeleteIcon sx={{ mr: 1 }}/>
           Delete
         </Button>
-        <Button onClick={onClose} variant="outlined">
+        <Button onClick={onClose} sx={{ color: theme.palette.font.info, borderColor: theme.palette.font.info, "&:hover": { backgroundColor: theme.palette.font.info, color: "black" } }} variant="outlined">
           Close
         </Button>
       </Box>
