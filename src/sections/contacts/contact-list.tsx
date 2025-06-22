@@ -7,12 +7,15 @@ import {
 } from "../../store/contactStore";
 import React, { useState, useEffect } from "react";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ContactList: React.FC = () => {
   const [search, setSearch] = useState("");
   const limit = 5;
   const [allContacts, setAllContacts] = useState<Contact[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const location = useLocation();
 
   const showFavoritesOnly = useContactStore((state) => state.showFavoritesOnly);
   const setShowFavoritesOnly = useContactStore(
@@ -20,12 +23,15 @@ const ContactList: React.FC = () => {
   );
 
   useEffect(() => {
+    if (location.state?.successMessage) {
+      toast.success(location.state.successMessage);
+    }
     const fetchAll = async () => {
       const all = await fetchAllContacts();
       setAllContacts(all);
     };
     fetchAll();
-  }, []);
+  }, [location.state?.successMessage]);
 
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
