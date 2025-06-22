@@ -2,15 +2,15 @@
   "contacts": [
     {
       "id": "11",
+      "favourite": true,
       "name": "Isabel Moreno",
-      "phone": "64353453245",
       "email": "isabel.moreno@example.com",
-      "address": "468 Poplar St fdsfasd",
-      "favourite": true
+      "phone": "64353453245",
+      "address": "468 Poplar St fdsfasd"
     },
     {
       "id": "12",
-      "favourite": true,
+      "favourite": false,
       "name": "Jason Brown",
       "email": "jason.brown@example.com",
       "phone": "555-789-0123",
@@ -18,27 +18,19 @@
     },
     {
       "id": "13",
+      "favourite": true,
       "name": "Karen Davis",
-      "phone": "83765433",
       "email": "karen.davis@example.com",
-      "address": "680 Redwood Rd",
-      "favourite": false
+      "phone": "83765433",
+      "address": "680 Redwood Rd"
     },
     {
       "id": "14",
-      "favourite": true,
+      "favourite": false,
       "name": "Leonardo Rossi",
       "email": "leonardo.rossi@example.com",
       "phone": "333-890-1234",
       "address": "791 Aspen St"
-    },
-    {
-      "id": "15",
-      "name": "Maria Fernandez fsdafsd",
-      "phone": "2223456789",
-      "email": "maria.fernandez@example.com",
-      "address": "892 Pinecone Blvd",
-      "favourite": false
     },
     {
       "id": "16",
@@ -63,22 +55,6 @@
       "email": "fad@fsd.com",
       "address": "dsfadsfsd",
       "favourite": false
-    },
-    {
-      "id": "6abf",
-      "name": "hdfgsdf",
-      "phone": "51245234",
-      "email": "gouri.duragkar@pinnacle.in",
-      "address": "fasasdf",
-      "favourite": true
-    },
-    {
-      "id": "3a1b",
-      "name": "Arshad Khna",
-      "phone": "523452345",
-      "email": "003arshad@gmail.com",
-      "address": "fasdfsdaf",
-      "favourite": true
     }
   ]
 }

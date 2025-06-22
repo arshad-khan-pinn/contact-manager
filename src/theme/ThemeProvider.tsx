@@ -41,9 +41,6 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         alignItems="center"
         py={2}
         sx={{
-          // backgroundImage: `url('${
-          //   darkMode ? "bg-dark.png" : "bg-light.png"
-          // }')`,
           backgroundColor: `${darkMode ? "bg.dark" : "bg.light"}`,
           backgroundSize: "cover",
           backgroundPosition: "center",
