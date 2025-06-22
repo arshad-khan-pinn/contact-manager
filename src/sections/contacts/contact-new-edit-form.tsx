@@ -9,6 +9,7 @@ import { useForm, SubmitHandler, Resolver } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
+import { useTheme } from '@mui/material';
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -32,6 +33,7 @@ interface ContactNewEditFormProps {
 
 const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const isEdit = !!contact;
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({
     resolver: yupResolver(validationSchema) as Resolver<FormData>,
@@ -61,24 +63,24 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
       if (isEdit) {
         updateContact({ id: contact.id, ...contactData }, {
           onSuccess: () => {
-            console.log("Contact updated successfully!");
+            console.log("Contact updated successfully - onSuccess!");
             toast.success('Contact updated successfully!');
             navigate('/');
           },
           onError: (error) => {
-            console.error("Error updating contact:", error);
+            console.error("Error updating contact - onError:", error);
             toast.error(`Failed to update contact: ${error.message}`);
           },
         });
       } else {
         addContact(contactData, {
           onSuccess: () => {
-            console.log("Contact added successfully!");
+            console.log("Contact added successfully - onSuccess!");
             toast.success('Contact added successfully!');
             navigate('/');
           },
           onError: (error) => {
-            console.error("Error adding contact:", error);
+            console.error("Error adding contact - onError:", error);
             toast.error(`Failed to add contact: ${error.message}`);
           },
         });
@@ -157,7 +159,8 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ py: 1.5, fontSize: '1rem', backgroundColor: (theme) => theme.palette.bg.searchIconButton }}
+            sx={{ py: 1.5, fontSize: '1rem', backgroundColor: theme.palette.bg.themeToggleButton, 
+              "&:hover": { backgroundColor: theme.palette.bg.themeToggleButtonHover }, }}
             disabled={isLoading}
           >
             {isEdit ? 'Update Contact' : 'Add Contact'}

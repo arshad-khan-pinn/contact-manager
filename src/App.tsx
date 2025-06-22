@@ -20,8 +20,12 @@ function App() {
           <Route path="/contacts/edit/:id" element={<ContactEditPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        <ToastContainer style={{ zIndex: 9999, position: 'fixed' }} />
       </ThemeProvider>
+      <ToastContainer
+        autoClose={5000}
+        pauseOnHover={false}
+        className="fixed top-5 right-5 z-50"
+      />
     </HelmetProvider>
   );
 }
