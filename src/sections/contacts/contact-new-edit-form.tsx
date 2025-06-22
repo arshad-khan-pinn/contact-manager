@@ -65,7 +65,7 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
           onSuccess: () => {
             console.log("Contact updated successfully - onSuccess!");
             toast.success('Contact updated successfully!');
-            navigate('/');
+            navigate('/', { state: { successMessage: 'Contact updated successfully!' } });
           },
           onError: (error) => {
             console.error("Error updating contact - onError:", error);
@@ -77,7 +77,7 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
           onSuccess: () => {
             console.log("Contact added successfully - onSuccess!");
             toast.success('Contact added successfully!');
-            navigate('/');
+            navigate('/', { state: { successMessage: 'Contact added successfully!' } });
           },
           onError: (error) => {
             console.error("Error adding contact - onError:", error);

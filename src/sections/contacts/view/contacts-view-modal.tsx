@@ -53,9 +53,9 @@ export default function ContactViewModal({
         onClose();
         queryClient.invalidateQueries({ queryKey: ["contacts"] });
       },
-      onError: (error) => {
+      onError: (error: Error | { message: string }) => {
         console.error("Error deleting contact:", error);
-        toast.error(`Failed to delete contact: ${error.message}`);
+        toast.error(`Failed to delete contact: ${error?.message || 'Failed to delete contact'}`);
       },
     });
     setOpenConfirmationModal(false);
