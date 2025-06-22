@@ -11,7 +11,6 @@ export default function ContactEditPage() {
         <Helmet>
           <title>Contact Edit</title>
         </Helmet>
-        <h1>Contact Edit</h1>
         <div>No Contact Found</div>
       </>
     );
@@ -22,8 +21,6 @@ export default function ContactEditPage() {
       <Helmet>
         <title>Contact Edit</title>
       </Helmet>
-
-      <h1>Contact Edit</h1>
 
       {contact && <ContactNewEditForm contact={contact} />}
     </>
