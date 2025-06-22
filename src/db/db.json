@@ -1,0 +1,60 @@
+{
+  "contacts": [
+    {
+      "id": "11",
+      "favourite": true,
+      "name": "Isabel Moreno",
+      "email": "isabel.moreno@example.com",
+      "phone": "64353453245",
+      "address": "468 Poplar St fdsfasd"
+    },
+    {
+      "id": "12",
+      "favourite": false,
+      "name": "Jason Brown",
+      "email": "jason.brown@example.com",
+      "phone": "555-789-0123",
+      "address": "579 Cypress Ave"
+    },
+    {
+      "id": "13",
+      "favourite": true,
+      "name": "Karen Davis",
+      "email": "karen.davis@example.com",
+      "phone": "83765433",
+      "address": "680 Redwood Rd"
+    },
+    {
+      "id": "14",
+      "favourite": false,
+      "name": "Leonardo Rossi",
+      "email": "leonardo.rossi@example.com",
+      "phone": "333-890-1234",
+      "address": "791 Aspen St"
+    },
+    {
+      "id": "16",
+      "name": "Nathan Chen",
+      "email": "nathan.chen@example.com",
+      "phone": "111-567-8901",
+      "address": "913 Elm Terrace",
+      "favourite": false
+    },
+    {
+      "id": "17",
+      "name": "Olivia Thompson",
+      "email": "olivia.thompson@example.com",
+      "phone": "000-678-1234",
+      "address": "102 Maple Ct",
+      "favourite": true
+    },
+    {
+      "id": "def0",
+      "name": "fsadfsd",
+      "phone": "325324",
+      "email": "fad@fsd.com",
+      "address": "dsfadsfsd",
+      "favourite": false
+    }
+  ]
+}
