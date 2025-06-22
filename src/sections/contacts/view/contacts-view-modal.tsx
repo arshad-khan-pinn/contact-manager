@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Avatar, Icon } from "@mui/material";
+import { Box, Typography, Button, Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useContactStore, useDeleteContact } from "../../../store/contactStore";
 import { toast } from "react-toastify";

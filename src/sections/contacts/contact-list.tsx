@@ -35,7 +35,7 @@ const ContactList: React.FC = () => {
   const totalPages = data?.totalPages || 0;
 
   const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     setCurrentPage(value);
