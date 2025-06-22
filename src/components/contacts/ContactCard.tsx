@@ -5,10 +5,11 @@ import {
   Avatar,
   Modal,
   IconButton,
+  useTheme,
 } from "@mui/material";
 import Star from "@mui/icons-material/Star";
 import StarBorder from "@mui/icons-material/StarBorder";
-import ContactEditModal from "../../sections/contacts/view/contacts-edit-modal";
+import ContactEditModal from "../../sections/contacts/view/contacts-view-modal";
 import { useUpdateContact } from "../../store/contactStore";
 
 interface ContactCardProps {
@@ -24,6 +25,7 @@ interface ContactCardProps {
 
 const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
 
   const handleClose = () => setOpen(false);
 
@@ -47,35 +49,44 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          backgroundColor: "#e6b0ff",
+          justifyContent: "space-between",
+          backgroundColor: theme.palette.bg.item,
+          minWidth: 380,
           padding: 1,
           marginBottom: 1,
-          borderRadius: 1,
+          borderRadius: 4,
           cursor: "pointer",
+          transition: "background-color 0.3s ease-in-out",
+          ":hover": {
+            backgroundColor: theme.palette.bg.searchIconButton,
+          },
         }}
       >
-        <Avatar sx={{ marginRight: 2 }} />
-        <Box sx={{ minWidth: 250 }}>
-          <Typography variant="body1">{contact.name}</Typography>
-          <Typography variant="body2">{contact.phone}</Typography>
-          <Typography variant="body2">{contact.email}</Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Avatar sx={{ marginRight: 2 }} />
+          <Box sx={{ minWidth: 250}}>
+            <Typography variant="body1" sx={{ fontWeight: "bold" }}>{contact.name}</Typography>
+            <Typography variant="body2" >{contact.phone}</Typography>
+            <Typography variant="body2">{contact.email}</Typography>
+          </Box>
         </Box>
-        <Box sx={{ minWidth: 100, mb: 2}}>
+        <Box>
           <IconButton
             onClick={(event) => {
               event.stopPropagation();
               handleUpdateFavorite(contact.id, !contact.favourite);
             }}
           >
-            {contact.favourite ? <Star sx={{ color: "#FFC107", fontSize: 30 }} /> : <StarBorder sx={{ fontSize: 30 }} />}
+            {contact.favourite ? (
+              <Star sx={{ color: "#FFC107", fontSize: 30 }} />
+            ) : (
+              <StarBorder sx={{ fontSize: 30 }} />
+            )}
           </IconButton>
         </Box>
       </Box>
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-      >
+      <Modal open={open} onClose={handleClose}>
         <ContactEditModal contact={contact} onClose={handleClose} />
       </Modal>
     </>

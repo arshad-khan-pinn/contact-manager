@@ -7,11 +7,13 @@ import ContactAddPage from "./pages/contacts/new.tsx";
 import ContactEditPage from "./pages/contacts/edit.tsx";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from "react-router-dom";
 
 function App() {
   return (
     <HelmetProvider>
       <ThemeProvider>
+        <Link to="/">Contact Manager</Link>
         <Routes>
           <Route path="/" element={<ContactListPage />} />
           <Route path="/contacts/add" element={<ContactAddPage />} />

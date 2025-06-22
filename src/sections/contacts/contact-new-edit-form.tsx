@@ -90,8 +90,8 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
 
   return (
     <Box sx={{ padding: 3, maxWidth: 500, margin: 'auto', mt: 4 }}>
-      <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
-        <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: 'bold', color: '#1976d2' }}>
+      <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, backgroundColor: (theme) => theme.palette.bg.panel }}>
+        <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: 'bold', color: (theme) => theme.palette.font.itemInfo }}>
           {isEdit ? 'Edit Contact' : 'Add New Contact'}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +100,7 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
             label="Name"
             margin="normal"
             variant="outlined"
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, backgroundColor: (theme) => theme.palette.bg.textField }}
             {...register('name')}
             error={!!errors.name}
             helperText={errors.name?.message}
@@ -110,7 +110,7 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
             label="Number"
             margin="normal"
             variant="outlined"
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, backgroundColor: (theme) => theme.palette.bg.textField }}
             {...register('number')}
             error={!!errors.number}
             helperText={errors.number?.message}
@@ -120,7 +120,7 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
             label="Email"
             margin="normal"
             variant="outlined"
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, backgroundColor: (theme) => theme.palette.bg.textField }}
             {...register('email')}
             error={!!errors.email}
             helperText={errors.email?.message}
@@ -132,7 +132,7 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
             variant="outlined"
             multiline
             rows={3}
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, backgroundColor: (theme) => theme.palette.bg.textField }}
             {...register('address')}
             error={!!errors.address}
             helperText={errors.address?.message}
@@ -156,9 +156,8 @@ const ContactNewEditForm: React.FC<ContactNewEditFormProps> = ({ contact }) => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            sx={{ py: 1.5, fontSize: '1rem' }}
+            sx={{ py: 1.5, fontSize: '1rem', backgroundColor: (theme) => theme.palette.bg.searchIconButton }}
             disabled={isLoading}
           >
             {isEdit ? 'Update Contact' : 'Add Contact'}

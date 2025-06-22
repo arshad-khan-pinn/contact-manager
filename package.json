@@ -8,8 +8,6 @@
     "build": "tsc -b && bunx --bun vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
     "mock-api": "json-server --watch src/db/db.json --port 3001"
   },
   "dependencies": {
@@ -19,6 +17,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.3",
+    "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.80.10",
     "dayjs": "^1.11.13",
     "json-server": "^1.0.0-beta.3",
@@ -28,11 +27,11 @@
     "react-hook-form": "^7.58.1",
     "react-router-dom": "^7.6.2",
     "react-toastify": "^11.0.5",
+    "tailwindcss": "^4.1.10",
     "yup": "^1.6.1",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "3.2.4",
     "@dr.pogodin/react-helmet": "^3.0.2",
     "@eslint/js": "^9.19.0",
     "@storybook/addon-essentials": "8.5.3",
@@ -47,7 +46,6 @@
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
-    "eslint-plugin-storybook": "^0.11.2",
     "globals": "^15.14.0",
     "storybook": "8.5.3",
     "typescript": "~5.7.2",
@@ -55,8 +53,6 @@
     "vite": "^6.1.0"
   },
   "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
+    "extends": []
   }
 }
