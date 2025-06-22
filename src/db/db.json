@@ -55,6 +55,14 @@
       "email": "fad@fsd.com",
       "address": "dsfadsfsd",
       "favourite": false
+    },
+    {
+      "id": "f3c6",
+      "favourite": true,
+      "name": "Arshad",
+      "email": "003arshad@gmail.com",
+      "phone": "8668721925",
+      "address": "Nagpur"
     }
   ]
 }

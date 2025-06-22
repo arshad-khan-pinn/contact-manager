@@ -24,6 +24,28 @@ const fetchContacts = async (page: number, limit: number) => {
   return { data, totalPages };
 };
 
+const fetchAllContacts = async () => {
+  const url = `${BASE_URL}/contacts`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch all contacts: ${response.status}`);
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const fetchContactByName = async (name: string) => {
+  const url = `${BASE_URL}/contacts?name=${name}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch contact by name: ${response.status}`);
+  }
+  const data = await response.json();
+  return data;
+};
+
+export { fetchAllContacts };
+
 // Function to add a new contact
 const addContact = async (contact: Omit<Contact, "id">) => {
   const response = await fetch(`${BASE_URL}/contacts`, {
@@ -169,7 +191,7 @@ export const useUpdateContact = () => {
       const queries = queryClient.getQueryCache().findAll({ queryKey: ['contacts'] });
 
       queries.forEach(({ queryKey }) => {
-        queryClient.setQueryData(queryKey, (oldData: any) => {
+        queryClient.setQueryData(queryKey, (oldData: { data: Contact[] } | undefined) => {
           if (!oldData) return oldData;
 
           return {
@@ -192,6 +214,17 @@ export const useDeleteContact = () => {
       // Invalidate the contacts query to refetch data
       queryClient.invalidateQueries({ queryKey: ["contacts"] });
       queryClient.removeQueries({ queryKey: ["contacts"] });
+    },
+  });
+};
+
+// Hook to search a contact
+export const useSearchContact = () => {
+  return useMutation({
+    mutationFn: fetchContactByName,
+    onSuccess: () => {
+      // Invalidate the contacts query to refetch data
+      queryClient.invalidateQueries({ queryKey: ["contacts"] });
     },
   });
 };

@@ -1,38 +1,31 @@
 import { Box, Pagination, TextField } from "@mui/material";
 import ContactCard from "../../components/contacts/ContactCard";
 import {
-  useContacts,
   Contact,
   useContactStore,
+  fetchAllContacts,
 } from "../../store/contactStore";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 const ContactList: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
+  const [allContacts, setAllContacts] = useState<Contact[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const showFavoritesOnly = useContactStore((state) => state.showFavoritesOnly);
   const setShowFavoritesOnly = useContactStore(
     (state) => state.setShowFavoritesOnly
   );
 
-  const { data, isLoading, isError, error } = useContacts({
-    page: currentPage,
-    limit,
-  });
-
-  if (isLoading) {
-    return <div>Loading contacts...</div>;
-  }
-
-  if (isError) {
-    return <div>Error fetching contacts: {error.message}</div>;
-  }
-
-  const contacts = data?.data || [];
-  const totalPages = data?.totalPages || 0;
+  useEffect(() => {
+    const fetchAll = async () => {
+      const all = await fetchAllContacts();
+      setAllContacts(all);
+    };
+    fetchAll();
+  }, []);
 
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
@@ -40,6 +33,10 @@ const ContactList: React.FC = () => {
   ) => {
     setCurrentPage(value);
   };
+
+  const filteredContacts = allContacts.filter((contact: Contact) =>
+    contact.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -85,14 +82,19 @@ const ContactList: React.FC = () => {
           border: "1px solid #333333",
         }}
       >
-        {contacts
-          .filter((contact: Contact) => !showFavoritesOnly || contact.favourite)
-          .map((contact: Contact) => (
-            <ContactCard key={contact.id} contact={contact} />
-          ))}
+        {filteredContacts.length === 0 ? (
+          <div>No contacts found</div>
+        ) : (
+          filteredContacts
+            .filter((contact: Contact) => !showFavoritesOnly || contact.favourite)
+            .slice((currentPage - 1) * limit, currentPage * limit)
+            .map((contact: Contact) => (
+              <ContactCard key={contact.id} contact={contact} />
+            ))
+        )}
       </Box>
       <Pagination
-        count={totalPages}
+        count={Math.ceil(filteredContacts.length / limit)}
         page={currentPage}
         onChange={handlePageChange}
         sx={{ marginTop: 2, display: "flex", justifyContent: "center" }}
