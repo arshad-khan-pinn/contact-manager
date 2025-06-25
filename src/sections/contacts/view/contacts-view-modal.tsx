@@ -12,6 +12,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { green, red } from "@mui/material/colors";
+import { getInitials } from "../../../utils/getInitials";
 
 interface ContactViewModalProps {
   contact: {
@@ -84,7 +85,7 @@ export default function ContactViewModal({
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <Avatar sx={{ borderRadius: 6, boxShadow: 5, width: 60, height: 60 }} />
+        <Avatar sx={{ borderRadius: 3, boxShadow: 3, width: 50, height: 50, color: theme.palette.font.info }}>{getInitials(contact.name)}</Avatar>
         <Typography variant="h4" fontWeight="bold" component="h2">
           {contact.name}
         </Typography>

@@ -11,6 +11,7 @@ import Star from "@mui/icons-material/Star";
 import StarBorder from "@mui/icons-material/StarBorder";
 import ContactEditModal from "../../sections/contacts/view/contacts-view-modal";
 import { useUpdateContact } from "../../store/contactStore";
+import { getInitials } from "../../utils/getInitials";
 
 interface ContactCardProps {
   contact: {
@@ -63,7 +64,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Avatar sx={{ marginRight: 2 }} />
+          <Avatar sx={{ marginRight: 2 }}>{getInitials(contact.name)}</Avatar>
           <Box sx={{ minWidth: 250}}>
             <Typography variant="body1" sx={{ fontWeight: "bold" }}>{contact.name}</Typography>
             <Typography variant="body2" >{contact.phone}</Typography>

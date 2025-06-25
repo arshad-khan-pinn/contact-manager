@@ -5,8 +5,9 @@ import {
   Contact,
   useContactStore,
 } from "../../store/contactStore";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const ContactList: React.FC = () => {
   const [search, setSearch] = useState("");
@@ -18,9 +19,25 @@ const ContactList: React.FC = () => {
     (state) => state.setShowFavoritesOnly
   );
 
+  const handlePageChange = useCallback(
+    (_event: React.ChangeEvent<unknown>, value: number) => {
+      setCurrentPage(value);
+    },
+    [setCurrentPage]
+  );
+
+  const handleShowFavoritesChange = useCallback(
+    (checked: boolean) => {
+      setShowFavoritesOnly(checked);
+      setCurrentPage(1);
+    },
+    [setShowFavoritesOnly, setCurrentPage]
+  );
+
   const { data, isLoading, isError, error } = useContacts({
     page: currentPage,
     limit,
+    search,
   });
 
   if (isLoading) {
@@ -34,12 +51,9 @@ const ContactList: React.FC = () => {
   const contacts = data?.data || [];
   const totalPages = data?.totalPages || 0;
 
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setCurrentPage(value);
-  };
+  const filteredContacts = contacts.filter(
+    (contact: Contact) => !showFavoritesOnly || contact.favourite
+  );
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -54,14 +68,17 @@ const ContactList: React.FC = () => {
           label="Search"
           variant="outlined"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setCurrentPage(1);
+          }}
           sx={{ marginBottom: 2 }}
         />
         <FormControlLabel
           control={
             <Checkbox
               checked={showFavoritesOnly}
-              onChange={(e) => setShowFavoritesOnly(e.target.checked)}
+              onChange={(e) => handleShowFavoritesChange(e.target.checked)}
               color="primary"
             />
           }
@@ -76,20 +93,22 @@ const ContactList: React.FC = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
-          // backgroundColor: (theme) => theme.palette.bg.item,
           borderRadius: 4,
           paddingX: 2,
           paddingY: 2,
+          minHeight: "61vh",
           border: "1px solid #333333",
         }}
       >
-        {contacts
-          .filter((contact: Contact) => !showFavoritesOnly || contact.favourite)
-          .map((contact: Contact) => (
+        {filteredContacts.length === 0 ? (
+          <Typography variant="body1">No contacts available</Typography>
+        ) : (
+          filteredContacts.map((contact: Contact) => (
             <ContactCard key={contact.id} contact={contact} />
-          ))}
+          ))
+        )}
       </Box>
       <Pagination
         count={totalPages}

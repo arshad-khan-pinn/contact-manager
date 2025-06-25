@@ -2,15 +2,15 @@
   "contacts": [
     {
       "id": "11",
-      "name": "Isabel Moreno fsdfsd",
+      "name": "Isabel Moreno",
       "phone": "64353453245",
       "email": "isabel.moreno@example.com",
       "address": "468 Poplar St fdsfasd",
-      "favourite": true
+      "favourite": false
     },
     {
       "id": "12",
-      "favourite": false,
+      "favourite": true,
       "name": "Jason Brown",
       "email": "jason.brown@example.com",
       "phone": "555-789-0123",
@@ -33,20 +33,12 @@
       "favourite": false
     },
     {
-      "id": "16",
-      "name": "Nathan Chen",
-      "email": "nathan.chen@example.com",
-      "phone": "111-567-8901",
-      "address": "913 Elm Terrace",
-      "favourite": false
-    },
-    {
-      "id": "1cc5",
-      "name": "arshad",
-      "phone": "64353453245",
-      "email": "sunit.patil@pinnacle.in",
-      "address": "sdfaswd",
-      "favourite": false
+      "id": "akTBj7V",
+      "favourite": true,
+      "name": "Arshad",
+      "email": "",
+      "phone": "953459345",
+      "address": ""
     }
   ]
 }
